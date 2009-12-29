@@ -27,7 +27,9 @@ public class Pixelville extends JFrame{
 
 		JFrame frame = new Pixelville();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new CityPainter(600, 600));
+		City city = new City(10,10);
+        //frame.getContentPane().add(new CityPainter(500, 900, city));
+        frame.getContentPane().add(new MapPainter(city));
         frame.setLocationRelativeTo(null);  // Center window.
 		frame.pack();
 		frame.setVisible(true);		
