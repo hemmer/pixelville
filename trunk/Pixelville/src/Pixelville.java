@@ -13,7 +13,7 @@ public class Pixelville extends JFrame{
 	Canvas canvas;
 	
 	public Pixelville(){
-    	setTitle("Pixel City");
+    	setTitle("Pixelville");
     	setResizable(false);
     	
 //    	canvas = new CityPainter(500, 600);
@@ -27,11 +27,12 @@ public class Pixelville extends JFrame{
 
 		JFrame frame = new Pixelville();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		City city = new City(10,10);
-        //frame.getContentPane().add(new CityPainter(500, 900, city));
-        frame.getContentPane().add(new MapPainter(city));
+		//City city = new City(41,33,4);
+		City city = new City(17,17,4);
+		frame.getContentPane().add(new CityPainter(500, 900, city));
+        //frame.getContentPane().add(new MapPainter(city));
         frame.setLocationRelativeTo(null);  // Center window.
-		frame.pack();
+		frame.pack(); 
 		frame.setVisible(true);		
 	}
 

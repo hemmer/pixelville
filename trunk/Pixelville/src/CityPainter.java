@@ -26,7 +26,7 @@ public class CityPainter extends JPanel{
 
 		int horGrids = panelWidth/gridSize;
 		int verGrids = 2*panelHeight/gridSize;
-		
+		/*
 		g.setColor(Color.BLACK);
 		// draw grid line
 		for(int i = -verGrids; i <= horGrids; i++){
@@ -34,7 +34,7 @@ public class CityPainter extends JPanel{
 		}
 		for(int i = 1; i <= horGrids + verGrids; i++){
 			g.drawLine(i*gridSize, 0, i*gridSize-2*panelHeight, panelHeight);
-		}
+		} */
 		
 		int w = city.getW();
 		int h = city.getH();
@@ -42,11 +42,11 @@ public class CityPainter extends JPanel{
 		// draw buildings
 		for(int i = 0; i < w; i++){
 			for(int j = 0; j < h; j++){
-				paintCube(240+(j-i)*gridSize/2,120+(i+j)*gridSize/4, g, city.getBuilding(i, j).getHeight(),40,40, city.getBuilding(i, j).getColor());
+				paintCube(400+(j-i)*gridSize/2,50+(i+j)*gridSize/4, g, city.getBuilding(i, j).getHeight(),40,40, city.getBuilding(i, j).getColor());
 			}
 		}
 		
-		//paintCube(160,240,g, 60, 80, 160, new Color(130,99,90));
+		//paintCube(400,400,g, 60, 80, 160, new Color(130,99,90,200));
 		//paintCube(160,180,g, 50, 60, 160, new Color(100,99,90));
 
 		//paintCube(280,300,g, 68, 68, 168, new Color(95,79,120));
@@ -75,14 +75,14 @@ public class CityPainter extends JPanel{
 		
 		int[] x2 = {x,x,x+d,x+d};
 		int[] y2 = {y, y-h, y-h-(d/2), y-(d/2)};
-		g.setColor(c.darker());
+		g.setColor(MiscMethods.darken(c, 0.7));
 		g.fillPolygon(x2, y2, 4);
 		g.setColor(Color.BLACK);
 		g.drawPolygon(x2, y2, 4);
 		
 		int[] x3 = {x, x-w, x-w+d, x+d};
     	int[] y3 = {y-h, y-(w/2)-h, y-(w/2)-(d/2)-h, y-(d/2)-h};
-		g.setColor(c.brighter());
+		g.setColor(MiscMethods.brighten(c, 0.7));
 		g.fillPolygon(x3, y3, 4);
 		g.setColor(Color.BLACK);
 		g.drawPolygon(x3, y3, 4);
