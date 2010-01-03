@@ -7,17 +7,17 @@ public class City {
 	Building[][] map;
 	int border = 4;
 	final private Building road = new Building(0,new Color(0,0,0));
-	final private Building grass = new Building(0,new Color(144,172,93, 0));
+	final private Building grass = new Building(0,new Color(144,172,93));
 	final private Building river = new Building(0,new Color(135,206,250));
 	int numberIntersections = 0;
-	int widthFactor = 4;
-	int heightFactor = 4;
+	int widthFactor = 3;
+	int heightFactor = widthFactor;
 	
 	public City(int w, int h, int border){
-		this.w = w;
-		this.h = h;
+		this.w = w+2*border;
+		this.h = h+2*border;
 		this.border = border;
-		map = new Building[w][h];
+		map = new Building[w+2*border][h+2*border];
 		initilise();
 		populate();
 	}
@@ -28,27 +28,29 @@ public class City {
 				map[i][j] = grass;
 			}
 		}
-		double test = Math.random();
-		// if there is to be a river, decide horizontal or vertical
-		if(test > 0.4){
-			boolean riverHorz = true;
-			int lim = w;
-			if(test > 0.5){
-				 riverHorz = false;
-				 lim = h;
-			}
-			int pos = (int)(Math.random()*lim);
-			for(int r = 0; r < lim; r++){
-				if(riverHorz){
-					map[r][pos] = river;
-				}else{
-					map[pos][r] = river;
-				}
-			}
-		}
-		
-		
-		
+//		double test = Math.random();
+//		
+//		// if there is to be a river, decide horizontal or vertical
+//		if(test > 1.0){
+//			boolean riverHorz = true;
+//			int lim = w;
+//			if(test > 0.5){
+//				 riverHorz = false;
+//				 lim = h;
+//			}
+//			int pos = (int)(Math.random()*lim);
+//			for(int r = 0; r < lim; r++){
+//				if(riverHorz){
+//					map[r][pos] = river;
+//					map[r][pos+1] = river;
+//
+//				}else{
+//					map[pos][r] = river;
+//					map[pos+1][r] = river;
+//
+//				}
+//			}
+//		}
 		
 	}
 
@@ -64,8 +66,9 @@ public class City {
 					numberIntersections++;
 				}
 				//System.out.println(getHeight(i,j,20,50));
-				//map[i][j] = (isRoad) ? road : map[i][j];
-				map[i][j] = (isRoad) ? road : new Building(getHeight(i, j, 5, 70), randColor(150));
+				//fix this mess
+				map[i][j] = (isRoad) ? road : map[i][j];
+				map[i][j] = (isRoad || map[i][j] == river) ? map[i][j] : new Building(getHeight(i, j, 5, 70), randColor(200));
 			}
 		}
 		
@@ -82,7 +85,6 @@ public class City {
 				count--;
 				int direction = 1;//(int) (Math.random()*4);  // 0-N, 1-E, 2-S, 3-W
 				int length = (direction == 0 || direction == 2) ? heightFactor : widthFactor;
-				System.out.println(numberIntersections + " " + randX + "  " + randY + " " + count);
 				deleteRoad(randX, randY, length-1, direction);
 			}
 			
@@ -112,7 +114,7 @@ public class City {
 	}
 	
 	public int getHeight(int i, int j, int minHeight, int maxHeight){
-		double height = Math.exp(-1.0*Math.pow( (double)((i-w/2.0)/(w/2)), 2.0) -1.0*Math.pow( (double)((j-h/2.0)/(h/2)), 2.0));
+		double height = Math.exp(-1.0*Math.pow( (double)((i-w/2.0)/(w/4)), 2.0) -1.0*Math.pow( (double)((j-h/2.0)/(h/4)), 2.0));
 		return minHeight + (int)(height*(maxHeight-minHeight));
 	}
 

@@ -2,6 +2,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 
@@ -20,7 +23,11 @@ public class MapPainter extends JPanel {
 		panelWidth = city.getW()*cellSize;
 		panelHeight = city.getH()*cellSize;
 		setPreferredSize(new Dimension(panelWidth,panelHeight));
+		addMouseListener(l); 
+
 	}
+	
+	MouseListener l = new MouseAdapter(){ public void mouseClicked (MouseEvent e) { System.exit(0); }};
 	
 	public void paintComponent(Graphics g){
 		int w = city.getW();
@@ -33,6 +40,7 @@ public class MapPainter extends JPanel {
 
 				g.setColor(city.getBuilding(i,j).getColor());
 				g.fillRect(i*panelWidth/w, j*panelHeight/h, panelWidth/w, panelHeight/h);
+				
 				if(displayHeights){
 					g.setColor(Color.white);
 					g.drawString(city.getBuilding(i, j).getHeight() + "m", i*panelWidth/w, (j+1)*panelHeight/h);
