@@ -1,0 +1,10 @@
+C:\Users\Hemmer\AppData\Local\Temporary Projects\Pixelville\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Hemmer\AppData\Local\Temporary Projects\Pixelville\bin\Debug\Pixelville.exe
+C:\Users\Hemmer\AppData\Local\Temporary Projects\Pixelville\bin\Debug\Pixelville.pdb
+C:\Users\Hemmer\AppData\Local\Temporary Projects\Pixelville\obj\x86\Debug\Pixelville.exe
+C:\Users\Hemmer\AppData\Local\Temporary Projects\Pixelville\obj\x86\Debug\Pixelville.pdb
+C:\Users\Hemmer\Documents\C#\Pixelville\Pixelville\bin\Debug\Pixelville.exe
+C:\Users\Hemmer\Documents\C#\Pixelville\Pixelville\bin\Debug\Pixelville.pdb
+C:\Users\Hemmer\Documents\C#\Pixelville\Pixelville\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Hemmer\Documents\C#\Pixelville\Pixelville\obj\x86\Debug\Pixelville.exe
+C:\Users\Hemmer\Documents\C#\Pixelville\Pixelville\obj\x86\Debug\Pixelville.pdb

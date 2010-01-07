@@ -1,0 +1,5 @@
+C:\Users\Hemmer\Documents\C#\Pixelville\Pixelville\bin\Release\Pixelville.exe
+C:\Users\Hemmer\Documents\C#\Pixelville\Pixelville\bin\Release\Pixelville.pdb
+C:\Users\Hemmer\Documents\C#\Pixelville\Pixelville\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\Hemmer\Documents\C#\Pixelville\Pixelville\obj\x86\Release\Pixelville.exe
+C:\Users\Hemmer\Documents\C#\Pixelville\Pixelville\obj\x86\Release\Pixelville.pdb
