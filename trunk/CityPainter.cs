@@ -39,12 +39,12 @@ public class CityPainter : System.Windows.Forms.Form
 
         scene = generateScene(city.getW(), city.getH());
 
-        xPos = random.Next(-bmpWidth, 0);
-        yPos = random.Next(-bmpHeight, 0);
+        xPos = random.Next(-xOffset, 0);
+        yPos = random.Next(-yOffset, 0);
 
         this.ScreenNumber = screenNo;
         BackColor = Color.FromArgb(144, 172, 93);
-        timer1.Interval = 1000;
+        timer1.Interval = 500;
         
         this.ClientSize = new System.Drawing.Size(Screen.AllScreens[screenNo].Bounds.Width, Screen.AllScreens[screenNo].Bounds.Height);
         this.Text = "Pixelville";
