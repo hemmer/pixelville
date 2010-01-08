@@ -32,19 +32,9 @@ public class CityPainter : System.Windows.Forms.Form
         this.panelWidth = panelWidth;
         this.city = city;
 
-        bmpWidth = gridSize / 2 * (city.getW() + city.getH())+2;
-        bmpHeight = gridSize / 4 * (city.getW() + city.getH())+2;
-        xOffset = gridSize / 2 * (city.getW());
-        yOffset = gridSize / 2;
-
-        scene = generateScene(city.getW(), city.getH());
-
-        xPos = random.Next(-xOffset, 0);
-        yPos = random.Next(-yOffset, 0);
-
         this.ScreenNumber = screenNo;
-        BackColor = Color.FromArgb(144, 172, 93);
-        timer1.Interval = 500;
+
+        timer1.Interval = 20;
         
         this.ClientSize = new System.Drawing.Size(Screen.AllScreens[screenNo].Bounds.Width, Screen.AllScreens[screenNo].Bounds.Height);
         this.Text = "Pixelville";
@@ -53,6 +43,11 @@ public class CityPainter : System.Windows.Forms.Form
         this.Paint += new System.Windows.Forms.PaintEventHandler(this.CityPainter_Paint);
         this.timer1.Enabled = true;
         this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+        this.Load += new EventHandler(CityPainter_Load);
+
+        this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+        this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+        this.SetStyle(ControlStyles.UserPaint, true);
         //this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnMouseEvent);
     }
 
@@ -68,31 +63,38 @@ public class CityPainter : System.Windows.Forms.Form
             }
         }
 
-        Pen p = new Pen(Color.Black);
-        gBmp.DrawRectangle(p, new Rectangle(new Point(xOffset,yOffset), new Size(5,5)));
-
         return bmp;
     }
 
     private void CityPainter_Load(object sender, System.EventArgs e) {
+        this.BackColor = Color.FromArgb(144, 172, 93);
+
+        bmpWidth = gridSize / 2 * (city.getW() + city.getH()) + 2;
+        bmpHeight = gridSize / 4 * (city.getW() + city.getH()) + 2;
+        xOffset = gridSize / 2 * (city.getW());
+        yOffset = gridSize / 2;
+
+        scene = generateScene(city.getW(), city.getH());
+
+        xPos = random.Next(-xOffset, 0);
+        yPos = random.Next(-yOffset, 0);
+
         this.Bounds = Screen.AllScreens[ScreenNumber].Bounds;
         Cursor.Hide();
         TopMost = true;
     }
 
     private void CityPainter_Paint(object sender, PaintEventArgs pea) {
-    }
-    protected override void OnPaint(PaintEventArgs pea) {
+ //   }
+    //protected override void OnPaint(PaintEventArgs pea) {
    
         Graphics gForm = pea.Graphics;
         gForm.DrawImage(scene, xPos, yPos, scene.Width, scene.Height);
-
-
     }
 
     private void timer1_Tick(object sender, System.EventArgs e) {
-        xPos+=25;
-        yPos+=25;
+        xPos+=2;
+        yPos+=2;
         this.Invalidate();
      }
 
