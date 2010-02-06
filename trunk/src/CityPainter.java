@@ -28,7 +28,7 @@ public class CityPainter extends JPanel{
 
 	public void paintComponent(Graphics g){
 
-		// initially have grass
+		// initially have grass background
 		g.setColor(new Color(144,172,93));
 		g.fillRect(0, 0, panelWidth, panelHeight);
 

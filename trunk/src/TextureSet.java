@@ -28,7 +28,7 @@ public class TextureSet {
 		Graphics2D g = texture.createGraphics();
 		int[] xs = new int[] {0,gridUnit*zoomLevel,2*gridUnit*zoomLevel,gridUnit*zoomLevel};
 		int[] ys = new int[] {gridUnit*zoomLevel/2, gridUnit*zoomLevel, gridUnit*zoomLevel/2, 0};
-		g.setColor(new Color(60,136,34));
+		g.setColor(new Color(144,172,93));
 		g.fillPolygon(xs, ys, 4);
 
 		// todo: fix this
@@ -36,10 +36,10 @@ public class TextureSet {
 			int randX = (int) (Math.random()*gridUnit*zoomLevel);
 			int randY = (int) (Math.random()*gridUnit*zoomLevel);
 
-			g.setColor(new Color(60,136,34).darker());
+			g.setColor(new Color(144,172,93).darker());
 			g.drawLine(randX, randY, randX, randY);
 
-			g.setColor(new Color(60,136,34).brighter());
+			g.setColor(new Color(144,172,93).brighter());
 			g.drawLine(randX, randY-1, randX, randY-1);
 		}
 		textureSet[0] = texture;
@@ -54,7 +54,7 @@ public class TextureSet {
 
 			texture = new BufferedImage(2*gridUnit*zoomLevel, gridUnit*zoomLevel, BufferedImage.TYPE_INT_ARGB);
 			Graphics2D g = texture.createGraphics();
-			PixelHelpers.drawTile(gridUnit*zoomLevel, gridUnit*zoomLevel, g, gridUnit*zoomLevel, gridUnit*zoomLevel, Color.gray);	//road tile
+			PixelHelpers.drawTile(gridUnit*zoomLevel, gridUnit*zoomLevel, g, gridUnit*zoomLevel, gridUnit*zoomLevel, Color.gray.darker());	//road tile
 			
 			int stripWidth = (gridUnit*zoomLevel)/20;
 			int stripHeight = stripWidth*5;
@@ -77,7 +77,7 @@ public class TextureSet {
 			}
 			else{
 				g.setColor(Color.black);
-				g.drawString(i + "", 10,10);
+//				g.drawString(i + "", 10,10);
 			}
 			
 			textureSet[i] = texture;
