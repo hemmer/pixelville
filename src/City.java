@@ -74,7 +74,7 @@ public class City {
 				}
 
 				//fix this mess
-				map[i][j] = (roads[i][j]) ? null : new House(getHeight(i, j, 5, 70), randColor(220));
+				map[i][j] = (roads[i][j]) ? null : new House(getHeight(i, j, 5, 70), randColor());
 			}
 		}
 		
