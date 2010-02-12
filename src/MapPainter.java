@@ -19,11 +19,12 @@ public class MapPainter extends JPanel {
 	boolean displayHeights = false;
 	
 	public MapPainter(City city){
+
 		this.city = city;
 		panelWidth = city.getW()*cellSize;
 		panelHeight = city.getH()*cellSize;
-		setPreferredSize(new Dimension(panelWidth,panelHeight));
 		addMouseListener(l); 
+		setPreferredSize(new Dimension(panelWidth,panelHeight));
 
 	}
 	

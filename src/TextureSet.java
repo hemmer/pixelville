@@ -1,19 +1,19 @@
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.TexturePaint;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 
 public class TextureSet {
 
 	private BufferedImage[] textureSet;
 	private int zoomLevel, gridUnit;
+	private int cellWidth;
 
 	public TextureSet(int zoomLevel, int gridUnit){
 		this.zoomLevel = zoomLevel;
 		this.gridUnit = gridUnit;
-
+		this.cellWidth = zoomLevel*gridUnit;
 		textureSet = new BufferedImage[17];
 
 		genGrass();
@@ -24,62 +24,84 @@ public class TextureSet {
 	private void genGrass(){
 		BufferedImage texture; 
 
-		texture = new BufferedImage(2*gridUnit*zoomLevel, gridUnit*zoomLevel, BufferedImage.TYPE_INT_ARGB);
+		texture = new BufferedImage(2*cellWidth, cellWidth, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = texture.createGraphics();
-		int[] xs = new int[] {0,gridUnit*zoomLevel,2*gridUnit*zoomLevel,gridUnit*zoomLevel};
-		int[] ys = new int[] {gridUnit*zoomLevel/2, gridUnit*zoomLevel, gridUnit*zoomLevel/2, 0};
+		int[] xs = new int[] {0,cellWidth,2*cellWidth,cellWidth};
+		int[] ys = new int[] {cellWidth/2, cellWidth, cellWidth/2, 0};
 		g.setColor(new Color(144,172,93));
 		g.fillPolygon(xs, ys, 4);
 
-		// todo: fix this
-		for(int i = 0; i < 20*zoomLevel; i++){
-			int randX = (int) (Math.random()*gridUnit*zoomLevel);
-			int randY = (int) (Math.random()*gridUnit*zoomLevel);
-
-			g.setColor(new Color(144,172,93).darker());
-			g.drawLine(randX, randY, randX, randY);
-
-			g.setColor(new Color(144,172,93).brighter());
-			g.drawLine(randX, randY-1, randX, randY-1);
+		// TODO: fix this
+		for(int i = 0; i < 40*zoomLevel; i++){
+			
+			int[] pos = getRandPositionInsideTile(cellWidth);
+			
+			if(Math.random() < 0.5){
+				g.setColor(new Color(144,172,93).darker().darker());
+				g.drawLine(pos[0], pos[1], pos[0], pos[1]);
+				g.setColor(new Color(144,172,93).brighter());
+				g.drawLine(pos[0], pos[1]-1, pos[0], pos[1]-1);
+			}else{
+				g.setColor(new Color(144,172,93).darker());
+				g.drawLine(pos[0], pos[1], pos[0], pos[1]);
+			}
 		}
 		textureSet[0] = texture;
 	}
 
+	/**
+	 * Gets points inside tile
+	 * @param w Half width of tile
+	 * @return array: 1st x-position, 2nd y-position
+	 */
+	private int[] getRandPositionInsideTile(int w){
+		int randX, posX, randY, posY;
+		Random rng = new Random();
+
+		do{
+			randX = rng.nextInt(w*2)-w;
+			randY = rng.nextInt(w)-w/2;
+			posX = w + randX;
+			posY = w/2 + randY;
+		}while(w-Math.abs(randX) < 2*Math.abs(randY)+1);
+		
+		return new int[] {posX, posY};
+	}
+	
 	private void genRoad(){
 
-		System.out.println(gridUnit*zoomLevel);
-		
+		System.out.println(cellWidth);
+
 		for(int i = 1; i <= 16; i++){
 			BufferedImage texture; 
 
-			texture = new BufferedImage(2*gridUnit*zoomLevel, gridUnit*zoomLevel, BufferedImage.TYPE_INT_ARGB);
+			texture = new BufferedImage(2*gridUnit*zoomLevel, cellWidth, BufferedImage.TYPE_INT_ARGB);
 			Graphics2D g = texture.createGraphics();
-			PixelHelpers.drawTile(gridUnit*zoomLevel, gridUnit*zoomLevel, g, gridUnit*zoomLevel, gridUnit*zoomLevel, Color.gray.darker());	//road tile
-			
-			int stripWidth = (gridUnit*zoomLevel)/20;
+			PixelHelpers.drawTile(cellWidth, cellWidth, g, cellWidth, cellWidth, Color.gray);	//road tile
+
+			int stripWidth = (cellWidth)/20;
 			int stripHeight = stripWidth*5;
-			
+
 			if(i == 9 || i == 11 || i == 13){
-				PixelHelpers.drawTile(3*gridUnit*zoomLevel/2, 3*gridUnit*zoomLevel/4, g, stripHeight, stripWidth, Color.white);	// right stripe
-				PixelHelpers.drawTile(gridUnit*zoomLevel, gridUnit*zoomLevel/2, g, stripHeight, stripWidth, Color.white);	// left strip
+				PixelHelpers.drawTile(3*cellWidth/2, 3*cellWidth/4, g, stripHeight, stripWidth, Color.white);	// right stripe
+				PixelHelpers.drawTile(cellWidth, cellWidth/2, g, stripHeight, stripWidth, Color.white);	// left strip
 			}else if(i == 7 || i == 14 || i == 6){
-				PixelHelpers.drawTile(gridUnit*zoomLevel, gridUnit*zoomLevel/2, g, stripWidth, stripHeight, Color.white);	// top strip
-				PixelHelpers.drawTile(1*gridUnit*zoomLevel/2, 3*gridUnit*zoomLevel/4, g, stripWidth, stripHeight, Color.white);	// bottom stripe
+				PixelHelpers.drawTile(cellWidth, cellWidth/2, g, stripWidth, stripHeight, Color.white);	// top strip
+				PixelHelpers.drawTile(1*cellWidth/2, 3*cellWidth/4, g, stripWidth, stripHeight, Color.white);	// bottom stripe
 			}else if(i == 3){
-				PixelHelpers.drawTile(gridUnit*zoomLevel, gridUnit*zoomLevel/2, g, stripWidth, stripHeight, Color.white);	// top strip
-				PixelHelpers.drawTile(gridUnit*zoomLevel, gridUnit*zoomLevel/2, g, stripHeight, stripWidth, Color.white);	// left strip
+				PixelHelpers.drawTile(cellWidth, cellWidth/2, g, stripWidth, stripHeight, Color.white);	// top strip
+				PixelHelpers.drawTile(cellWidth, cellWidth/2, g, stripHeight, stripWidth, Color.white);	// left strip
 			}else if(i == 5){
-				PixelHelpers.drawTile(1*gridUnit*zoomLevel/2, 3*gridUnit*zoomLevel/4, g, stripWidth, stripHeight, Color.white);	// bottom stripe
-				PixelHelpers.drawTile(gridUnit*zoomLevel, gridUnit*zoomLevel/2, g, stripHeight, stripWidth, Color.white);	// left strip
+				PixelHelpers.drawTile(1*cellWidth/2, 3*cellWidth/4, g, stripWidth, stripHeight, Color.white);	// bottom stripe
+				PixelHelpers.drawTile(cellWidth, cellWidth/2, g, stripHeight, stripWidth, Color.white);	// left strip
 			}else if(i == 10){
-				PixelHelpers.drawTile(3*gridUnit*zoomLevel/2, 3*gridUnit*zoomLevel/4, g, stripHeight, stripWidth, Color.white);	// right stripe
-				PixelHelpers.drawTile(gridUnit*zoomLevel, gridUnit*zoomLevel/2, g, stripWidth, stripHeight, Color.white);	// top strip
+				PixelHelpers.drawTile(3*cellWidth/2, 3*cellWidth/4, g, stripHeight, stripWidth, Color.white);	// right stripe
+				PixelHelpers.drawTile(cellWidth, cellWidth/2, g, stripWidth, stripHeight, Color.white);	// top strip
+			}else if(i == 12){
+				PixelHelpers.drawTile(3*cellWidth/2, 3*cellWidth/4, g, stripHeight, stripWidth, Color.white);	// right stripe
+				PixelHelpers.drawTile(1*cellWidth/2, 3*cellWidth/4, g, stripWidth, stripHeight, Color.white);	// bottom stripe
 			}
-			else{
-				g.setColor(Color.black);
-//				g.drawString(i + "", 10,10);
-			}
-			
+
 			textureSet[i] = texture;
 		}
 	}
@@ -87,7 +109,7 @@ public class TextureSet {
 	private void genWall(){
 		BufferedImage texture; 
 
-		texture = new BufferedImage(gridUnit*zoomLevel, gridUnit*zoomLevel, 1);
+		texture = new BufferedImage(cellWidth, cellWidth, 1);
 		Graphics2D g = texture.createGraphics();
 
 		g.setColor(Color.red);
@@ -95,7 +117,7 @@ public class TextureSet {
 		int[] ys = {0,0,10,10};
 		g.fillPolygon(xs, ys, 4);
 
-		//		textureSet[2] = new TexturePaint(texture, new Rectangle(0,0,gridUnit*zoomLevel,gridUnit*zoomLevel));
+		//		textureSet[2] = new TexturePaint(texture, new Rectangle(0,0,cellWidth,cellWidth));
 	}
 
 	public BufferedImage getTexture(int index){

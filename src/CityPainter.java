@@ -36,6 +36,8 @@ public class CityPainter extends JPanel{
 		int h = city.getH();
 
 		//fix offset
+		int xOffset = 900;
+		int yOffset = -(city.getBorder()-1)*gridUnit*zoomFactor;
 		
 		// draw buildings
 		for(int i = 0; i < w; i++){
@@ -43,27 +45,28 @@ public class CityPainter extends JPanel{
 				if(city.getBuilding(i, j).getName() == "road"){
 					Road temp = (Road) city.getBuilding(i, j);
 					int type = temp.getType();
-					paintTile(900+(j-i)*gridUnit*zoomFactor,-200+(i+j)*gridUnit*zoomFactor/2, g, gridUnit*zoomFactor,gridUnit*zoomFactor, cityTextures.getTexture(type));
+					paintTile(xOffset+(j-i)*gridUnit*zoomFactor,yOffset+(i+j)*gridUnit*zoomFactor/2, g, gridUnit*zoomFactor,gridUnit*zoomFactor, cityTextures.getTexture(type));
 				}else if(city.getBuilding(i, j).getName() == "grass"){
-					paintTile(900+(j-i)*gridUnit*zoomFactor,-200+(i+j)*gridUnit*zoomFactor/2, g, gridUnit*zoomFactor,gridUnit*zoomFactor, cityTextures.getTexture(0));
+					paintTile(xOffset+(j-i)*gridUnit*zoomFactor,yOffset+(i+j)*gridUnit*zoomFactor/2, g, gridUnit*zoomFactor,gridUnit*zoomFactor, cityTextures.getTexture(0));
 				}
 				else{
-					PixelHelpers.paintCube(900+(j-i)*gridUnit*zoomFactor,-200+(i+j)*gridUnit*zoomFactor/2, g, city.getBuilding(i, j).getHeight(),gridUnit*zoomFactor,gridUnit*zoomFactor, city.getBuilding(i, j).getColorSet());
+					PixelHelpers.paintCube(xOffset+(j-i)*gridUnit*zoomFactor,yOffset+(i+j)*gridUnit*zoomFactor/2, g, city.getBuilding(i, j).getHeight(),gridUnit*zoomFactor,gridUnit*zoomFactor, city.getBuilding(i, j).getColorSet());
 				}
 			}
 		}
 	}
 
 	private void paintTile(int x, int y, Graphics g, int w, int d, BufferedImage t){
-
+		
+		// need to cast to Graphics 2D to draw image
 		Graphics2D gs = (Graphics2D) g;
-
-		int[] x3 = {x, x-w, x-w+d, x+d};
-		int[] y3 = {y, y-(w/2), y-(w/2)-(d/2), y-(d/2)};
+		
+		int[] xs = {x, x-w, x-w+d, x+d};
+		int[] ys = {y, y-(w/2), y-(w/2)-(d/2), y-(d/2)};
 
 		gs.drawImage(t, x-w, y-d, new Color(0,0,0,0), this);
-		g.setColor(Color.black);
-		g.drawPolygon(x3, y3, 4);
+		g.setColor(new Color(0,0,0,50));
+		g.drawPolygon(xs, ys, 4);
 	}	
 	
 }
