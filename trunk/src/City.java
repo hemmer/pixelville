@@ -6,7 +6,7 @@ public class City {
 	private int w, h;
 	Building[][] map;
 	boolean[][] roads;		// true - road, false - no road
-	int border = 4;
+	private int border = 4;
 	int numberIntersections = 0;
 	int widthFactor = 2;
 	int heightFactor = widthFactor;
@@ -28,8 +28,8 @@ public class City {
 				map[i][j] = new Grass();
 			}
 		}
-		double test = Math.random();
-		
+//		double test = Math.random();
+//		
 //		// if there is to be a river, decide horizontal or vertical
 //		if(test > 0.0){
 //			boolean riverHorz = true;
@@ -74,7 +74,7 @@ public class City {
 				}
 
 				//fix this mess
-				map[i][j] = (roads[i][j]) ? null : new House(getHeight(i, j, 5, 70), randColor());
+				map[i][j] = (roads[i][j]) ? null : new House(getHeight(i, j, 5, 70), randColor(200));
 			}
 		}
 		
@@ -169,6 +169,14 @@ public class City {
 	
 	public Building getBuilding(int i, int j){
 		return map[i][j];
+	}
+
+	public int getBorder() {
+		return border;
+	}
+
+	public void setBorder(int border) {
+		this.border = border;
 	}
 
 }
